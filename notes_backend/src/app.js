@@ -45,6 +45,35 @@ app.use(
 
 app.set('trust proxy', true);
 
+/**
+ * PUBLIC_INTERFACE
+ * GET /openapi.json
+ * Serves the OpenAPI specification JSON. This is useful for tooling and validation.
+ */
+app.get('/openapi.json', (req, res) => {
+  try {
+    const host = req.get('host');
+    let protocol = req.protocol;
+    const actualPort = req.socket.localPort;
+    const hasPort = host.includes(':');
+    const needsPort =
+      !hasPort &&
+      ((protocol === 'http' && actualPort !== 80) ||
+        (protocol === 'https' && actualPort !== 443));
+    const fullHost = needsPort ? `${host}:${actualPort}` : host;
+    protocol = req.secure ? 'https' : protocol;
+
+    const dynamicSpec = {
+      ...swaggerSpec,
+      servers: [{ url: `${protocol}://${fullHost}` }],
+    };
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    return res.status(200).send(JSON.stringify(dynamicSpec, null, 2));
+  } catch (e) {
+    return res.status(500).json({ message: 'Failed to render OpenAPI spec' });
+  }
+});
+
 // Swagger docs with dynamic server URL
 app.use('/docs', swaggerUi.serve, (req, res, next) => {
   const host = req.get('host'); // may or may not include port
