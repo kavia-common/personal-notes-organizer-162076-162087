@@ -1,0 +1,4 @@
+{
+    "command": "npm run test",
+    "working_directory": "/home/kavia/workspace/code-generation/personal-notes-organizer-162076-162087/notes_backend"
+}
