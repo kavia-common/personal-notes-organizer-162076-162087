@@ -16,7 +16,9 @@ const options = {
       url: '/openapi.json',
     },
     servers: [
-      // Will be overridden with dynamic server in /docs, but keeps static JSON valid
+      // This value is a static fallback for the generated JSON file.
+      // At runtime, both /openapi.json and /docs dynamically compute the server URL
+      // from the incoming request host/protocol/port, so the UI points to the right origin.
       { url: 'http://localhost:3000' },
     ],
     components: {

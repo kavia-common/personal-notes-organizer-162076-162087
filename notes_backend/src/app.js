@@ -13,6 +13,14 @@ const notesRoutes = require('./routes/notes');
 // Initialize express app
 const app = express();
 
+/**
+ * CORS and API URL notes:
+ * - Default allowed origins:
+ *   http://localhost:4200, http://127.0.0.1:4200, http://localhost:3000, http://127.0.0.1:3000
+ * - To restrict/override, set CORS_ORIGIN with a comma-separated list of origins.
+ * - JSON body limit can be configured with JSON_BODY_LIMIT env var (default 1mb).
+ * - The OpenAPI spec and Swagger UI compute the server URL dynamically from the request.
+ */
 // CORS: allow Angular dev host and common dev origins.
 // In production, set CORS_ORIGIN env var to the deployed frontend URL(s) (comma-separated).
 const cfg = getConfig();
