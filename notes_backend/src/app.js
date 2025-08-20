@@ -1,5 +1,7 @@
 const cors = require('cors');
 const express = require('express');
+// Ensure environment variables are loaded early
+require('./config');
 const routes = require('./routes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('../swagger');
