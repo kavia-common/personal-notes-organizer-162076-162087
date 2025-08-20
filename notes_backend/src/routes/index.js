@@ -1,6 +1,7 @@
 const express = require('express');
 const healthController = require('../controllers/health');
 const authRoutes = require('./auth');
+const notesRoutes = require('./notes');
 
 const router = express.Router();
 
@@ -36,5 +37,6 @@ router.get('/', healthController.check.bind(healthController));
 
 // Mount API routes
 router.use('/api/auth', authRoutes);
+router.use('/api/notes', notesRoutes);
 
 module.exports = router;
